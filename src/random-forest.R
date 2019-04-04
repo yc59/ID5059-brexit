@@ -78,7 +78,7 @@ mlr <- multinom(Party ~ B + D + H + J + K + L + M + O, data = train)
 summary(mlr)
 predict(mlr, validate)
 
-#Misclassification Error for test data
+#Misclassification Error for train data
 tab5 <- table(predict(mlr), train$Party)
 print(tab5)
 1-sum(diag(tab5))/sum(tab5)
