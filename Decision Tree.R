@@ -2,7 +2,7 @@
 
 tree <- ctree(Party ~ B + D + H + J + K + L + M + O, data = train, 
               controls = ctree_control(mincriterion = 0.99, minsplit = 100))
-                    ### Check the best mincriterion and minsplit??
+                    #### Check the best mincriterion and minsplit??
 tree
 plot(tree)
 
