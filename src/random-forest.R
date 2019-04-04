@@ -7,7 +7,11 @@ library(party)
 library(gam)
 library(nnet)
 
+# TODO - Path should be properly declared
 data <- read.csv("~/Desktop/ID5059/Practical02/ID5059-P2/master-copy.csv")
+
+# TODO - Possibly not attach the data to global environment
+# See https://stackoverflow.com/questions/10067680/why-is-it-not-advisable-to-use-attach-in-r-and-what-should-i-use-instead
 attach(data)
 summary(data)
 str(data)
@@ -23,6 +27,7 @@ validate <- data[pd == 2, ]
 
 rf <- randomForest(Party ~ B + D + H + J + K + L + M + O, data = train,
                    ntree = 300, mtry = 8, importance = TRUE, proximity = TRUE)
+                    #### Check the best ntree and mtry??
 print(rf)
 attributes(rf)
 
@@ -51,41 +56,3 @@ testPred1 <- predict(tree, newdata = validate)
 tab2 <- table(testPred1, validate$Party)
 print(tab2)
 1-sum(diag(tab2))/sum(tab2)
-
-## Decision Tree
-
-tree <- ctree(Party ~ B + D + H + J + K + L + M + O, data = train, 
-              controls = ctree_control(mincriterion = 0.99, minsplit = 100))
-tree
-plot(tree)
-
-#Predict
-predict(tree, validate)
-
-#Misclassification for train data
-tab3 <- table(predict(tree), train$Party)
-print(tab3)
-1-sum(diag(tab3))/sum(tab3)
-
-#Misclassification for validate data
-testPred2 <- predict(tree, newdata = validate)
-tab4 <- table(testPred2, validate$Party)
-print(tab4)
-1-sum(diag(tab4))/sum(tab4)
-
-## Multinomial Logistic Regression
-mlr <- multinom(Party ~ B + D + H + J + K + L + M + O, data = train)
-summary(mlr)
-predict(mlr, validate)
-
-#Misclassification Error for train data
-tab5 <- table(predict(mlr), train$Party)
-print(tab5)
-1-sum(diag(tab5))/sum(tab5)
-
-#Misclassification for validate data
-testPred3 <- predict(mlr, newdata = validate)
-tab6 <- table(testPred3, validate$Party)
-print(tab6)
-1-sum(diag(tab6))/sum(tab6)
-
