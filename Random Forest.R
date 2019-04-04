@@ -2,7 +2,7 @@
 
 rf <- randomForest(Party ~ B + D + H + J + K + L + M + O, data = train,
                    ntree = 300, mtry = 8, importance = TRUE, proximity = TRUE)
-### Check the best ntree and mtry??
+                    #### Check the best ntree and mtry??
 print(rf)
 attributes(rf)
 
